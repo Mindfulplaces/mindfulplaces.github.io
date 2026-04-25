@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Umgebungen für Potenzialentfaltung und Gesundheit</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<button id="soundToggle" class="sound-btn" aria-label="Sound aktivieren">
+
+  <!-- Sound AUS -->
+  <svg id="iconMuted" viewBox="0 0 24 24" width="20" height="20">
+    <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="white"/>
+    <line x1="18" y1="6" x2="22" y2="10" stroke="white" stroke-width="2"/>
+    <line x1="22" y1="6" x2="18" y2="10" stroke="white" stroke-width="2"/>
+  </svg>
+
+  <!-- Sound AN -->
+  <svg id="iconSound" viewBox="0 0 24 24" width="20" height="20" style="display:none;">
+    <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="white"/>
+    <path d="M16 8c1.5 1.5 1.5 6.5 0 8" stroke="white" stroke-width="2" fill="none"/>
+  </svg>
+
+</button>
+<body>
+
+  <!-- NAVIGATION -->
+  <div class="nav">
+    <div class="nav-bar">
+      <button class="menu-icon" id="menuToggle" aria-label="Menü öffnen">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="nav-title">
+        Umgebungen für Potenzialentfaltung und Gesundheit
+      </div>
+    </div>
+
+    <div class="nav-expanded" id="navMenu">
+      <a href="#">Beratung & Planung</a>
+      <a href="#">Design Shop</a>
+      <a href="#">Über Neurodesign</a>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <video id="heroVideo" autoplay muted loop playsinline class="hero-video">
+    <source id="heroSource" src="video/hero2.mp4" type="video/mp4" />
+  </video>
+
+  <!-- SCROLL INDICATOR -->
+  <div class="scroll-indicator"></div>
+
+  <!-- CONTENT -->
+  <section class="content">
+
+    <!-- HORIZONTAL SCROLL CARDS -->
+    <div class="horizontal-scroll">
+
+      <div class="card">
+        <img src="images/img1.jpg" alt="">
+        <h2>Spatial Design Studio</h2>
+        <p>
+          Wir begleiten Organisationen und Projekte dabei, Räume und Strukturen so zu gestalten,
+          dass sie wirklich für Menschen arbeiten – fundiert in Neurodesign und Architekturpsychologie,
+          von der ersten Idee bis zur fertigen Umgebung.
+        </p>
+      </div>
+
+      <div class="card">
+        <img src="images/img2.jpg" alt="">
+        <h2>Consulting</h2>
+        <p>
+          Wir begleiten Organisationen und Teams dabei, Strukturen und Kulturen zu entwickeln,
+          die menschliches Potenzial wirklich entfalten – durch bewusst gestaltete Umgebungen,
+          klare Orientierung und die Bedingungen, unter denen Menschen ihr Bestes geben können.
+        </p>
+      </div>
+
+      <div class="card">
+        <img src="images/img3.jpg" alt="">
+        <h2>Shop</h2>
+        <p>
+          Hochwertige Produkte, die das Prinzip von Mindful Places in jeden Raum bringen –
+          unkompliziert, durchdacht und mit einer Wirkung, die man sofort spürt.
+        </p>
+      </div>
+
+    </div>
+
+    <!-- FOOTER LINKS (JETZT RICHTIG POSITIONIERT) -->
+    <div class="footer-links">
+      <a href="#">Über uns</a>
+      <a href="impressum.html">Impressum</a>
+      <a href="#">Datenschutz</a>
+    </div>
+
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
