@@ -5,99 +5,135 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Umgebungen für Potenzialentfaltung und Gesundheit</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: Arial, sans-serif;
+    }
+
+    .hero-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    .sound-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    .content {
+      position: relative;
+      z-index: 2;
+      margin-top: 100vh;
+      background: white;
+      padding: 40px;
+    }
+
+    .card {
+      margin-bottom: 40px;
+    }
+
+    .card img {
+      width: 100%;
+      height: auto;
+    }
+
+    .footer-links {
+      margin-top: 40px;
+    }
+
+    .footer-links a {
+      margin-right: 20px;
+    }
+  </style>
 </head>
+
+<body>
+
+<!-- SOUND BUTTON -->
 <button id="soundToggle" class="sound-btn" aria-label="Sound aktivieren">
 
-  <!-- Sound AUS -->
   <svg id="iconMuted" viewBox="0 0 24 24" width="20" height="20">
     <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="white"/>
     <line x1="18" y1="6" x2="22" y2="10" stroke="white" stroke-width="2"/>
     <line x1="22" y1="6" x2="18" y2="10" stroke="white" stroke-width="2"/>
   </svg>
 
-  <!-- Sound AN -->
   <svg id="iconSound" viewBox="0 0 24 24" width="20" height="20" style="display:none;">
     <path d="M4 10v4h4l5 4V6l-5 4H4z" fill="white"/>
     <path d="M16 8c1.5 1.5 1.5 6.5 0 8" stroke="white" stroke-width="2" fill="none"/>
   </svg>
 
 </button>
-<body>
 
-  <!-- NAVIGATION -->
-  <div class="nav">
-    <div class="nav-bar">
-      <button class="menu-icon" id="menuToggle" aria-label="Menü öffnen">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
-      <div class="nav-title">
-        Umgebungen für Potenzialentfaltung und Gesundheit
-      </div>
-    </div>
+<!-- VIDEO -->
+<video id="heroVideo" autoplay muted loop playsinline class="hero-video">
+  <source src="video/hero2.mp4" type="video/mp4">
+  Dein Browser unterstützt kein Video.
+</video>
 
-    <div class="nav-expanded" id="navMenu">
-      <a href="#">Beratung & Planung</a>
-      <a href="#">Design Shop</a>
-      <a href="#">Über Neurodesign</a>
-    </div>
+<!-- CONTENT -->
+<section class="content">
+
+  <div class="card">
+    <img src="images/img1.jpg" alt="">
+    <h2>Spatial Design Studio</h2>
+    <p>Wir gestalten Räume für Menschen und Potenzialentfaltung.</p>
   </div>
 
-  <!-- VIDEO -->
-  <video id="heroVideo" autoplay muted loop playsinline class="hero-video">
-    <source id="heroSource" src="video/hero2.mp4" type="video/mp4" />
-  </video>
+  <div class="card">
+    <img src="images/img2.jpg" alt="">
+    <h2>Consulting</h2>
+    <p>Strukturen und Umgebungen für echte Wirkung.</p>
+  </div>
 
-  <!-- SCROLL INDICATOR -->
-  <div class="scroll-indicator"></div>
+  <div class="card">
+    <img src="images/img3.jpg" alt="">
+    <h2>Shop</h2>
+    <p>Produkte für bewusst gestaltete Räume.</p>
+  </div>
 
-  <!-- CONTENT -->
-  <section class="content">
+  <div class="footer-links">
+    <a href="#">Über uns</a>
+    <a href="impressum.html">Impressum</a>
+    <a href="#">Datenschutz</a>
+  </div>
 
-    <!-- HORIZONTAL SCROLL CARDS -->
-    <div class="horizontal-scroll">
+</section>
 
-      <div class="card">
-        <img src="images/img1.jpg" alt="">
-        <h2>Spatial Design Studio</h2>
-        <p>
-          Wir begleiten Organisationen und Projekte dabei, Räume und Strukturen so zu gestalten,
-          dass sie wirklich für Menschen arbeiten – fundiert in Neurodesign und Architekturpsychologie,
-          von der ersten Idee bis zur fertigen Umgebung.
-        </p>
-      </div>
+<script>
+  const video = document.getElementById("heroVideo");
+  const button = document.getElementById("soundToggle");
+  const iconMuted = document.getElementById("iconMuted");
+  const iconSound = document.getElementById("iconSound");
 
-      <div class="card">
-        <img src="images/img2.jpg" alt="">
-        <h2>Consulting</h2>
-        <p>
-          Wir begleiten Organisationen und Teams dabei, Strukturen und Kulturen zu entwickeln,
-          die menschliches Potenzial wirklich entfalten – durch bewusst gestaltete Umgebungen,
-          klare Orientierung und die Bedingungen, unter denen Menschen ihr Bestes geben können.
-        </p>
-      </div>
+  button.addEventListener("click", () => {
+    video.muted = !video.muted;
 
-      <div class="card">
-        <img src="images/img3.jpg" alt="">
-        <h2>Shop</h2>
-        <p>
-          Hochwertige Produkte, die das Prinzip von Mindful Places in jeden Raum bringen –
-          unkompliziert, durchdacht und mit einer Wirkung, die man sofort spürt.
-        </p>
-      </div>
+    if (video.muted) {
+      iconMuted.style.display = "block";
+      iconSound.style.display = "none";
+    } else {
+      iconMuted.style.display = "none";
+      iconSound.style.display = "block";
+      video.play();
+    }
+  });
+</script>
 
-    </div>
-
-    <!-- FOOTER LINKS (JETZT RICHTIG POSITIONIERT) -->
-    <div class="footer-links">
-      <a href="#">Über uns</a>
-      <a href="impressum.html">Impressum</a>
-      <a href="#">Datenschutz</a>
-    </div>
-
-  </section>
-
-  <script src="script.js"></script>
 </body>
 </html>
