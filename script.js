@@ -1,68 +1,125 @@
-// ELEMENTE
-const cards = document.querySelectorAll(".card");
-const toggle = document.getElementById("menuToggle");
-const menu = document.getElementById("navMenu");
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindful Places</title>
 
-const video = document.getElementById("heroVideo");
-const source = document.getElementById("heroSource");
-
-const scrollIndicator = document.querySelector(".scroll-indicator");
-
-const soundBtn = document.getElementById("soundToggle");
-const iconMuted = document.getElementById("iconMuted");
-const iconSound = document.getElementById("iconSound");
-
-
-// NAVIGATION (Menü öffnen/schließen)
-if (toggle && menu) {
-  toggle.addEventListener("click", () => {
-    menu.classList.toggle("active");
-  });
-}
-
-
-// CARDS ANIMATION (Fade + Slide)
-function reveal() {
-  const trigger = window.innerHeight * 0.8;
-
-  cards.forEach(card => {
-    const rect = card.getBoundingClientRect();
-
-    if (rect.top < trigger) {
-      card.style.transform = "translateY(0)";
-      card.style.opacity = "1";
-      card.style.transition = "all 1s ease";
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      overflow-x: hidden;
     }
-  });
-}
 
-window.addEventListener("scroll", reveal);
-reveal();
+    .hero-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -1;
+    }
 
+    .sound-btn {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 10;
+      background: rgba(0,0,0,0.5);
+      border: none;
+      padding: 10px;
+      cursor: pointer;
+    }
 
-// VIDEO LOGIK (FIX für iPhone Scroll-Reset)
-let currentSource = "";
+    .content {
+      margin-top: 100vh;
+      background: white;
+      padding: 40px;
+      position: relative;
+      z-index: 2;
+    }
 
-function setVideoSource() {
-  if (!video || !source) return;
+    .card {
+      margin-bottom: 40px;
+    }
 
+    .card img {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- SOUND BUTTON -->
+<button id="soundToggle" class="sound-btn">
+  🔇
+</button>
+
+<!-- VIDEO -->
+<video id="heroVideo" autoplay muted loop playsinline class="hero-video"></video>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="card">
+    <img src="images/img1.jpg">
+    <h2>Spatial Design Studio</h2>
+  </div>
+
+  <div class="card">
+    <img src="images/img2.jpg">
+    <h2>Consulting</h2>
+  </div>
+
+  <div class="card">
+    <img src="images/img3.jpg">
+    <h2>Shop</h2>
+  </div>
+
+</div>
+
+<script>
+const video = document.getElementById("heroVideo");
+const button = document.getElementById("soundToggle");
+
+// 🔥 STABILE VIDEO-LOGIK
+function setVideo() {
   const isPortrait = window.innerHeight > window.innerWidth;
-  const newSource = isPortrait ? "video/hero.mp4" : "video/hero2.mp4";
+  const src = isPortrait ? "video/hero.mp4" : "video/hero2.mp4";
 
-  // NUR wechseln wenn sich wirklich etwas ändert
-  if (newSource !== currentSource) {
-    currentSource = newSource;
-
-    source.src = newSource;
+  if (video.src.indexOf(src) === -1) {
+    video.src = src;
     video.load();
-
-    // wichtig für Safari / iOS
     video.play().catch(() => {});
   }
 }
 
-// Beim Laden
-setVideoSource();
+// Initial laden
+setVideo();
+
+// Nur bei Drehung wechseln (kein iPhone Bug)
+window.addEventListener("orientationchange", setVideo);
+
+
+// 🔊 SOUND BUTTON
+button.addEventListener("click", () => {
+  video.muted = !video.muted;
+
+  if (video.muted) {
+    button.textContent = "🔇";
+  } else {
+    button.textContent = "🔊";
+    video.play().catch(() => {});
+  }
+});
+</script>
+
+</body>
+</html>setVideoSource();
 
 // ❗ WICHTIG: KEIN resize mehr (verursacht Bug auf iPhone)
 // Stattdessen nur bei echter Drehung
