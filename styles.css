@@ -1,276 +1,130 @@
-/* Inter Display – Light */
-@font-face {
-  font-family: 'Inter Display';
-  src: url('fonts/InterDisplay-Light.woff2') format('woff2');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mindful Places</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+    }
+
+    /* VIDEO */
+    .hero-video {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+
+    /* SOUND BUTTON */
+    .sound-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 10;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      padding: 12px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    /* CONTENT */
+    .content {
+      margin-top: 100vh;
+      background: rgba(0,0,0,0.6);
+      padding: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .card {
+      margin-bottom: 40px;
+    }
+
+    .card img {
+      width: 100%;
+      border-radius: 12px;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- VIDEO -->
+<video id="heroVideo" autoplay muted loop playsinline class="hero-video"></video>
+
+<!-- SOUND BUTTON -->
+<button id="soundToggle" class="sound-btn">🔇</button>
+
+<!-- CONTENT -->
+<div class="content">
+
+  <div class="card">
+    <img src="images/img1.jpg" alt="">
+    <h2>Spatial Design Studio</h2>
+  </div>
+
+  <div class="card">
+    <img src="images/img2.jpg" alt="">
+    <h2>Consulting</h2>
+  </div>
+
+  <div class="card">
+    <img src="images/img3.jpg" alt="">
+    <h2>Shop</h2>
+  </div>
+
+</div>
+
+<script>
+const video = document.getElementById("heroVideo");
+const button = document.getElementById("soundToggle");
+
+// 🔥 STABILE VIDEO-LOGIK
+function setVideo() {
+  const isPortrait = window.innerHeight > window.innerWidth;
+  const src = isPortrait ? "video/hero.mp4" : "video/hero2.mp4";
+
+  if (!video.src.includes(src)) {
+    video.src = src;
+    video.load();
+    video.play().catch(() => {});
+  }
 }
 
-/* Inter Display – Regular */
-@font-face {
-  font-family: 'Inter Display';
-  src: url('fonts/InterDisplay-Regular.woff2') format('woff2');
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-}
+// Initial
+setVideo();
 
-/* Inter Display – Bold */
-@font-face {
-  font-family: 'Inter Display';
-  src: url('fonts/InterDisplay-Bold.woff2') format('woff2');
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-}
-/* RESET */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+// Nur bei Drehung neu setzen (kein iPhone Bug)
+window.addEventListener("orientationchange", setVideo);
 
-/* BASIS */
-body {
-  font-family: 'Inter Display', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: black;
-  color: white;
-}
+// 🔊 SOUND
+button.addEventListener("click", () => {
+  video.muted = !video.muted;
 
-/* VIDEO FIXIERT IM HINTERGRUND */
-.hero-video {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
+  if (video.muted) {
+    button.textContent = "🔇";
+  } else {
+    button.textContent = "🔊";
+    video.play().catch(() => {});
+  }
+});
+</script>
 
-/* NAVIGATION */
-.nav {
-  position: fixed;
-  top: 20px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  z-index: 1000;
-}
-
-/* GLAS MENÜLEISTE */
-.nav-bar {
-  width: 90%;
-  max-width: 500px;
-  height: 60px;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  padding: 0 20px;
-
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(20px);
-
-  border-radius: 30px;
-  border: 1px solid rgba(255,255,255,0.2);
-
-  box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
-
-/* TITEL */
-.nav-title {
-  color: white;
-  font-weight: 500;
-}
-
-/* BURGER ICON */
-.menu-icon {
-  width: 30px;
-  height: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.menu-icon span {
-  height: 3px;
-  width: 100%;
-  background: white;
-  border-radius: 2px;
-}
-
-/* DROPDOWN MENÜ (GLAS LOOK) */
-.nav-expanded {
-  position: absolute;
-  top: 70px;
-  width: 90%;
-  max-width: 600px;
-
-  background: rgba(255,255,255,0.15);
-  backdrop-filter: blur(20px);
-
-  border-radius: 30px;
-  border: 1px solid rgba(255,255,255,0.2);
-
-  padding: 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-
-  opacity: 0;
-  transform: translateY(-10px);
-  pointer-events: none;
-
-  transition: all 0.3s ease;
-}
-
-/* AKTIV */
-.nav-expanded.active {
-  opacity: 1;
-  transform: translateY(0);
-  pointer-events: auto;
-}
-
-/* LINKS */
-.nav-expanded a {
-  color: white;
-  text-decoration: none;
-  font-size: 1.2rem;
-}
-
-/* SCROLL ICON */
-.scroll-indicator {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 35px;
-  border: 2px solid white;
-  border-radius: 15px;
-}
-
-.scroll-indicator::after {
-  content: "";
-  position: absolute;
-  top: 5px;
-  left: 50%;
-  width: 4px;
-  height: 6px;
-  background: white;
-  transform: translateX(-50%);
-  border-radius: 2px;
-  animation: scroll 1.5s infinite;
-}
-
-@keyframes scroll {
-  0% { opacity: 1; transform: translate(-50%, 0); }
-  100% { opacity: 0; transform: translate(-50%, 10px); }
-}
-
-/* CONTENT */
-.content {
-  margin-top: 100vh;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-/* CARDS */
-.card {
-  background: rgba(255,255,255,0.08);
-  backdrop-filter: blur(20px);
-  border-radius: 24px;
-  padding: 20px;
-  max-width: 500px;
-  margin: 0 auto;
-
-  transform: translateY(100px);
-  opacity: 0;
-}
-
-.card img {
-  width: 100%;
-  border-radius: 16px;
-  margin-bottom: 10px;
-}
-/* Horizontaler Scroll-Container */
-.horizontal-scroll {
-  display: flex;
-  gap: 20px;
-
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-
-  padding: 20px;
-}
-
-/* Cards anpassen für horizontales Layout */
-.horizontal-scroll .card {
-  min-width: 20%;
-  flex: 0 0 auto;
-
-  scroll-snap-align: center;
-}
-.horizontal-scroll {
-  -webkit-overflow-scrolling: touch;
-}
-.scroll-indicator {
-  transition: opacity 0.3s ease;
-}
-
-.scroll-indicator.hide {
-  opacity: 0;
-}
-.footer-links {
-  margin-top: 60px;
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  flex-wrap: wrap;
-
-  font-size: 0.9rem;
-  opacity: 0.7;
-}
-
-.footer-links a {
-  color: white;
-  text-decoration: none;
-  transition: opacity 0.2s ease;
-}
-
-.footer-links a:hover {
-  opacity: 1;
-}
-.sound-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-
-  width: 50px;
-  height: 50px;
-
-  border-radius: 50%;
-  border: none;
-
-  background: rgba(255,255,255,0.2);
-  backdrop-filter: blur(10px);
-
-  color: white;
-  font-size: 20px;
-
-  cursor: pointer;
-  z-index: 1000;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+</body>
+</html>
